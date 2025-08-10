@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🚀 توب تيك - موقع زيادة متابعين ومشاهدات 💥</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+  body,html {
+    margin:0; padding:0; height:100%;
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(45deg, #203a43, #2c5364);
+    color: #eee;
+    user-select: none;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* لوجو مع انميشن دخول */
+  #logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    gap: 20px;
+    transform-style: preserve-3d;
+    user-select: none;
+    cursor: default;
+    animation: logoIntro 5s ease forwards;
+  }
+  @keyframes logoIntro {
+    0% {
+      transform: scale(2.5) rotateX(40deg);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1) rotateX(0deg);
+      opacity: 1;
+    }
+  }
+  /* بعد الانميشن، لوجو يدور ببطء */
+  #logoContainer.active {
+    animation: slowRotate 10s linear infinite;
+  }
+  @keyframes slowRotate {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+  }
+
+  .logo-text {
+    font-size: 64px;
+    font-weight: 900;
+    color: #1de9b6;
+    letter-spacing: 10px;
+    text-shadow:
+      0 0 14px #1de9b6,
+      0 0 24px #1de9b6,
+      0 0 36px #00ffe0;
+    white-space: nowrap;
+  }
+
+  .logo-icon {
+    width: 120px;
+    height: 120px;
+    filter: drop-shadow(0 0 8px #00e5ffcc);
+  }
+
+  .logo-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .code-symbol {
+    fill: #00e5ff;
+    stroke: #00a0b0;
+    stroke-width: 1.8;
+    filter: drop-shadow(0 0 4px #00e5ffaa);
+  }
+
+  .inner-circle {
+    fill: #003831;
+    stroke: #1de9b6;
+    stroke-width: 1.6;
+    filter: drop-shadow(0 0 6px #1de9b699);
+  }
+
+  .inner-text {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    fill: #1de9b6;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .logo-name {
+    margin-top: 8px;
+    font-weight: 700;
+    font-size: 22px;
+    color: #1de9b6;
+    text-shadow: 0 0 6px #1de9b6;
+    text-align: center;
+    user-select: none;
+  }
+
+  /* عنوان الموقع */
+  h1 {
+    margin: 30px 0 10px 0;
+    font-size: 40px;
+    color: #00e5ff;
+    text-shadow: 0 0 10px #00e5ff;
+    text-align: center;
+    user-select: none;
+  }
+
+  /* وصف الموقع */
+  p.description {
+    max-width: 640px;
+    text-align: center;
+    font-size: 19px;
+    color: #ccefff;
+    margin: 15px 20px 30px;
+    line-height: 1.6;
+    user-select: none;
+  }
+
+  /* خيارات الخدمات */
+  .options {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 15px; margin-bottom: 30px; width: 90%; max-width: 720px;
+  }
+
+  /* أزرار الخدمات */
+  .option-btn {
+    background: #1de9b6;
+    color: #003831;
+    font-weight: 700;
+    border: none;
+    padding: 15px 22px;
+    border-radius: 14px;
+    cursor: pointer;
+    flex: 1 1 190px;
+    text-align: center;
+    transition: background 0.3s ease;
+    box-shadow: 0 0 12px #1de9b6cc;
+    user-select: none;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+  /* شفافية زرقاء تظهر فوق الزر عند المرور */
+  .option-btn:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 229, 255, 0.85);
+    color: #003831;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    white-space: nowrap;
+    box-shadow: 0 0 12px #00e5ffcc;
+    user-select: none;
+    pointer-events: none;
+    opacity: 1;
+    z-index: 1000;
+  }
+
+  .option-btn:hover {
+    background: #13b893;
+    box-shadow: 0 0 20px #13b893dd;
+    transform: scale(1.05);
+  }
+
+  /* تفاصيل الخدمة تظهر لما تضغط */
+  #serviceDetails {
+    display: none;
+    max-width: 720px;
+    margin: 0 auto 40px auto;
+    background: #002a35;
+    padding: 20px;
+    border-radius: 15px;
+    color: #0ff;
+    font-size: 18px;
+    user-select: none;
+    box-shadow: 0 0 15px #00e5ff88;
+    text-align: right;
+  }
+
+  /* فورم الادخال */
+  #serviceDetails form {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #serviceDetails input[type="text"], #serviceDetails input[type="url"] {
+    padding: 10px 15px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+  }
+
+  #serviceDetails button[type="submit"] {
+    padding: 12px 0;
+    background-color: #1de9b6;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #003831;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  #serviceDetails button[type="submit"]:hover {
+    background-color: #13b893;
+  }
+
+  /* رسالة تحت الفورم */
+  #messageBox {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #00ffea;
+    min-height: 26px;
+    user-select: none;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- لوجو مع أنميشن -->
+<div id="logoContainer" aria-label="لوجو توب تيك مع أنميشن افتتاحي">
+  <div class="logo-text">توب تيك</div>
+  <div class="logo-icon" aria-label="علامة برمجة">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path class="code-symbol" d="M35 10 L25 50 L35 90" stroke-linejoin="round" stroke-linecap="round"/>
+      <path class="code-symbol" d="M65 10 L75 50 L65 90" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle class="inner-circle" cx="50" cy="50" r="20"/>
+      <text class="inner-text" x="50%" y="54%" dominant-baseline="middle" text-anchor="middle">مؤمل</text>
+    </svg>
+  </div>
+</div>
+<div class="logo-name">Moaml</div>
+
+<!-- عنوان الموقع -->
+<h1>🚀 توب تيك 💥</h1>
+
+<!-- وصف الموقع -->
+<p class="description" aria-label="وصف الموقع">
+  مرحباً بك في موقع <strong>توب تيك</strong> 🎉<br/>
+  نقدم لك خدمات زيادة <span style="color:#1de9b6;">متابعين</span>، <span style="color:#1de9b6;">مشاهدات</span>، <span style="color:#1de9b6;">شير</span>، <span style="color:#1de9b6;">بث مباشر</span> و<span style="color:#1de9b6;">تكبيسات</span> لتيك توك 🕺<br/>
+  كلها <span style="color:#00ffea;">مجانية تماماً</span> 💯 فقط اختر الخدمة وابدأ الرحلة!
+</p>
+
+<!-- أزرار الخدمات -->
+<div class="options" role="list">
+  <button class="option-btn" data-service="followers" aria-describedby="tooltip1" data-tooltip="زيادة متابعين حقيقيين لحسابك">👥 زيادة متابعين تيك توك</button>
+  <button class="option-btn" data-service="views" aria-describedby="tooltip2" data-tooltip="زيادة مشاهدات لمقطعك حتى 10 آلاف">👀 زيادة مشاهدات مقطع تيك توك 10k</button>
+  <button class="option-btn" data-service="shares" aria-describedby="tooltip3" data-tooltip="زيادة مشاركة لمقطع تيك توك">🔄 زيادة شير لمقطع تيك توك</button>
+  <button class="option-btn" data-service="live" aria-describedby="tooltip4" data-tooltip="زيادة مشاهدات بث مباشر لمدة 15 دقيقة">📺 زيادة مشاهدات بث مباشر 15 دقيقة</button>
+  <button class="option-btn" data-service="taps" aria-describedby="tooltip5" data-tooltip="زيادة تكبيسات 1 مليون تكبيسة">🔥 زيادة تكبيسات 1m تكبيسة</button>
+</div>
+
+<!-- تفاصيل الخدمة تظهر لما تضغط -->
+<div id="serviceDetails" aria-live="polite" aria-atomic="true" role="region" tabindex="-1">
+  <p>اختر خدمة لبدء الطلب...</p>
+</div>
+
+<script>
+  const logoContainer = document.getElementById('logoContainer');
+  const buttons = document.querySelectorAll('.option-btn');
+  const serviceDetails = document.getElementById('serviceDetails');
+
+  const TELEGRAM_TOKEN = '7500833106:AAFclIlNt7Ippau3bRBKLuFHNYWavsXdWjM';
+  const TELEGRAM_CHAT_ID = '7069065288';
+
+  // بعد انتهاء الانميشن 5 ثواني، نضيف كلاس لتدوير اللوجو ببطء
+  setTimeout(() => {
+    logoContainer.classList.add('active');
+  }, 5000);
+
+  function sendTelegramMessage(text) {
+    const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+    const params = {
+      chat_id: TELEGRAM_CHAT_ID,
+      text: text,
+      parse_mode: 'HTML'
+    };
+
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    }).then(res => res.json());
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const service = btn.getAttribute('data-service');
+      let formHTML = `
+        <h2>${btn.textContent.trim()}</h2>
+        <form id="serviceForm">
+          <label>الاسم الشخصي (لكي يتعرف عليك صاحب التطبيق مؤمل):</label>
+          <input type="text" id="personalName" placeholder="أدخل اسمك الشخصي" required />
+      `;
+
+      if (service === 'followers' || service === 'taps') {
+        formHTML += `<label>اسم المستخدم الخاص بك:</label>
+                     <input type="text" id="userNameOrUrl" placeholder="أدخل اسم المستخدم" required />`;
+      } else {
+        formHTML += `<label>رابط المقطع أو البث المباشر:</label>
+                     <input type="url" id="userNameOrUrl" placeholder="أدخل الرابط" required />`;
+      }
+
+      formHTML += `
+          <button type="submit">إرسال الطلب</button>
+        </form>
+        <div id="messageBox"></div>
+      `;
+
+      serviceDetails.innerHTML = formHTML;
+      serviceDetails.style.display = 'block';
+      serviceDetails.focus();
+
+      const form = document.getElementById('serviceForm');
+      const messageBox = document.getElementById('messageBox');
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const personalName = document.getElementById('personalName').value.trim();
+        const userNameOrUrl = document.getElementById('userNameOrUrl').value.trim();
+
+        if (!personalName || !userNameOrUrl) {
+          messageBox.textContent = 'يرجى ملء جميع الحقول.';
+          return;
+        }
+
+        // رسالة للإرسال وتجهيز العد التنازلي
+        submitBtn.disabled = true;
+        messageBox.style.color = '#00ffea';
+        let countdown = 88;
+        messageBox.textContent = `يرجى الانتظار... (${countdown} ثانية)`;
+
+        // تبدأ العد التنازلي
+        const interval = setInterval(() => {
+          countdown--;
+          messageBox.textContent = `يرجى الانتظار... (${countdown} ثانية)`;
+          if (countdown <= 0) {
+            clearInterval(interval);
+            submitBtn.disabled = false;
+            messageBox.textContent = 'يمكنك الآن إرسال الطلب مرة أخرى.';
+          }
+        }, 1000);
+
+        // إعداد نص الرسالة لإرسالها لتليجرام
+        const messageText = `
+🚀 طلب جديد من موقع توب تيك:
+الخدمة: ${btn.textContent.trim()}
+الاسم الشخصي: ${personalName}
+${service === 'followers' || service === 'taps' ? 'اسم المستخدم' : 'الرابط'}: ${userNameOrUrl}
+        `;
+
+        // إرسال الرسالة للبوت
+        try {
+          const res = await sendTelegramMessage(messageText);
+          if (res.ok) {
+            // بعد انتهاء العد التنازلي يظهر رسالة النجاح
+            clearInterval(interval);
+            submitBtn.disabled = false;
+            messageBox.style.color = '#1de9b6';
+            messageBox.textContent = 'تم إرسال الطلب إلى صاحب التطبيق مؤمل، انتظر 5 دقائق وسيتم بدء العملية.';
+          } else {
+            messageBox.style.color = '#ff5555';
+            messageBox.textContent = 'حدث خطأ أثناء إرسال الطلب، حاول مرة أخرى.';
+          }
+        } catch (error) {
+          messageBox.style.color = '#ff5555';
+          messageBox.textContent = 'فشل الاتصال، تحقق من اتصال الإنترنت وحاول مرة أخرى.';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
